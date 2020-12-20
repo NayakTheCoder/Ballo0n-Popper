@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ballon Popper !!</title>
+    <style>
+        *{
+            cursor: crosshair;
+        }
+        .target{bottom: 0;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid black;
+            border-radius: 65px;
+            background-color: rgb(246, 1, 173);
+        }
+        .string{
+            position: absolute;
+            width: 3px;
+            height: 150px;
+            left: 45%;
+            top: 99%;
+            background-color: black;
+        }
+        #score{
+            position: absolute;
+            font-size: 40px;
+            color: black;
+        }
+        #escape{
+            position: absolute;
+            font-size: 40px;
+            top: 10%;
+            color: black;
+        }
+    </style>
+</head>
+<body background="backdrop.png">
+     <div id="contain">
+          <span id="score">Score : 0</span>
+          <span id="escape"></span>
+     </div>
+</body>
+<script>
+  let create;
+    window.onload = function(){
+        let score = document.getElementById("score");
+        let escaped = document.getElementById("escape");
+        escapedcount = 0;
+        scorecount = 0;
+        create = setInterval(function(){
+            let ballonleft = Math.floor(Math.random()*1100);
+            let contain = document.getElementById("contain");
+             let ballon = document.createElement("div");
+             contain.appendChild(ballon);
+             ballon.className = "target";
+           ballon.style.left =   ballonleft + "px";
+       
+    let ballontop = ballon.style.top;
+    let upgo = setInterval(function(){
+        upgo += 3;
+        if(upgo > 690&&upgo<693){
+            //scorecount--;
+            score.innerHTML = "";
+            clearInterval(upgo)
+        }
+        ballon.addEventListener("click" , function(){
+            contain.removeChild(ballon);
+            ballon.style.display = "none";
+            scorecount++;
+            score.innerHTML = "Score : " + scorecount;
+            clearInterval(upgo);
+        })
+        ballon.style.bottom = upgo + "px"
+    } , 20)
+  let string = document.createElement("span");
+ // string.style.right = (ballonleft + 0.0 + "px") 
+  ballon.appendChild(string);
+  //string.style.top = (ballontop + "px") - 40;
+  string.className = "string";
+        } , 1000);
+    }
+</script>
+</html>
