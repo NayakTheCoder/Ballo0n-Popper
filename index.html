@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ballon Popper !!</title>
+    <title>Shoot 'em all</title>
     <style>
         *{
             cursor: crosshair;
+            background-color: rgb(0, 255, 242);
         }
-        .target{bottom: 0;
+      
+        .target{
+            bottom:0%;
             position: absolute;
             width: 100px;
             height: 100px;
@@ -29,27 +32,82 @@
             font-size: 40px;
             color: black;
         }
+        #time{
+            position: absolute;
+            top: 10%;
+            font-size: 40px;
+            color: black;
+        }
+        #count{
+            position: absolute;
+            top: 10%;
+            font-size: 40px;
+            color: black;
+        }
+      
         #escape{
             position: absolute;
             font-size: 40px;
             top: 10%;
             color: black;
         }
+        #modal{
+            position: absolute;
+            width: 730px;
+            left: 20%;
+            top: 10%;
+            height: 500px;
+           border: 10px solid black;
+           box-shadow: 10px 10px 33px 33px lightgray;
+            background-color: white;
+        }
+        #start{
+            position: absolute;
+            width:190px;
+            border: 3px solid black;
+            height: 115px;
+            font-size: 30px;
+            background-color: rgb(3, 119, 119);
+            color: white;
+            left: 35%;
+            top: 40%;
+        }
+        #start:hover{
+            box-shadow: 2px 2px 15px 15px lightgray;
+            cursor: pointer;
+        }
     </style>
 </head>
-<body background="backdrop.png">
+<body>
+    <audio id="clap" src="clap.wav"></audio>
+    <div id="grass">
+
+    </div>
      <div id="contain">
-          <span id="score">Score : 0</span>
+          <span id="score">Score : <span id="num"> 0</span> </span>
+          <span id="time"> <span id="count"> </span> </span>
           <span id="escape"></span>
      </div>
+     <div id="modal">
+      <button type = "button" id="start">Start</button>
+    </div>
 </body>
 <script>
+    let start = document.getElementById("start");
+    let modal = document.getElementById("modal");
   let create;
-    window.onload = function(){
+    start.onclick = function(){
         let score = document.getElementById("score");
+        let time = document.getElementById("time");
+        time.innerHTML = "";
+        modal.style.display = "none";
         let escaped = document.getElementById("escape");
         escapedcount = 0;
         scorecount = 0;
+        let timecountdown = setInterval(function(){
+            countdown--;
+            count.innerHTML = countdown;
+        } , 1000);
         create = setInterval(function(){
             let ballonleft = Math.floor(Math.random()*1100);
             let contain = document.getElementById("contain");
@@ -60,17 +118,19 @@
        
     let ballontop = ballon.style.top;
     let upgo = setInterval(function(){
-        upgo += 3;
-        if(upgo > 690&&upgo<693){
-            //scorecount--;
-            score.innerHTML = "";
+        upgo += 4;
+        if(upgo > 720&&upgo<723){
+            scorecount--;
+num.innerHTML = scorecount;
             clearInterval(upgo)
         }
         ballon.addEventListener("click" , function(){
+            let clap  = document.getElementById("clap");
+            clap.play();
             contain.removeChild(ballon);
             ballon.style.display = "none";
             scorecount++;
-            score.innerHTML = "Score : " + scorecount;
+           num.innerHTML =  scorecount;
             clearInterval(upgo);
         })
         ballon.style.bottom = upgo + "px"
